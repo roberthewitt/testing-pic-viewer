@@ -9,5 +9,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface DeviceRegistration {
 
+    /**
+     * localhost:8080/reg?h=555&w=444
+     * <p/>
+     * this will parse the h and w values from the url post
+     *
+     * @param req postRequest
+     * @return a new Session object for this device
+     */
     Session registerForSession(HttpServletRequest req);
 }

@@ -11,8 +11,8 @@ public class Session {
     public final int height;
     public final int width;
 
-    public static Session newSession() {
-        return new Session(UUID.randomUUID().toString(), 800, 600);
+    public static Session newSession(int height, int width) {
+        return new Session(UUID.randomUUID().toString(), height, width);
     }
 
     private Session(String sessionId, int height, int width) {

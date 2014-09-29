@@ -13,7 +13,18 @@ public class Devices {
         return new DeviceRegistration() {
             @Override
             public Session registerForSession(HttpServletRequest req) {
-                return Session.newSession();
+                int deviceHeight = getDeviceDimension(req, "h");
+                int deviceWidth = getDeviceDimension(req, "w");
+                return Session.newSession(deviceHeight, deviceWidth);
+            }
+
+            private int getDeviceDimension(HttpServletRequest req, String dimension) {
+                int deviceHeight = 0;
+                String h = req.getParameter(dimension);
+                if (h != null) {
+                    deviceHeight = Integer.valueOf(h);
+                }
+                return deviceHeight;
             }
         };
     }
