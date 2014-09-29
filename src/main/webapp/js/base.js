@@ -39,6 +39,8 @@ google.devrel.samples.hello.SCOPES =
  */
 google.devrel.samples.hello.signedIn = false;
 
+var sessionId = '';
+
 /**
  * Loads the application UI after the user has completed auth.
  */
@@ -193,13 +195,14 @@ google.devrel.samples.hello.init = function(apiRoot) {
   gapi.client.load('helloworld', 'v1', callback, apiRoot);
   gapi.client.load('oauth2', 'v2', callback);
 
-  registerDevice();
-  sendHeartbeat();
-  setInterval(sendHeartbeat, 5000);
+   registerDevice();
+   sendHeartbeat();
+   setInterval(sendHeartbeat, 5000);
+
 };
 
 function sendHeartbeat() {
-  console.log("Heartbeat");
+  console.log("Heartbeat: " + sessionId);
 }
 
 function registerDevice() {
@@ -208,8 +211,26 @@ function registerDevice() {
     var height = screen.height * ratio;
     console.log("Registering device: w = " + width + " h = " + height);
     var path = '/reg?h=' + height + '&w=' + width;
-    request(path);
+
+    $.ajax({
+      type:    "POST",
+      url:     path,
+      data:    {"postComment":""},
+      success: function(data) {
+            alert('Handling response');
+            var response = jQuery.parseJSON(result);
+            sessionId = response.sessionId;
+            console.log(sessionId);
+      },
+      // vvv---- This is the new bit
+      error:   function(jqXHR, textStatus, errorThrown) {
+            alert("Error, status = " + textStatus + ", " +
+                  "error thrown: " + errorThrown
+            );
+      }
+    });
 }
+
 
 function request(path, params, method) {
     method = "post"; // Set method to post by default if not specified.
