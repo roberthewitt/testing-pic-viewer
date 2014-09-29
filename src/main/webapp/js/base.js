@@ -217,8 +217,7 @@ function registerDevice() {
       url:     path,
       data:    {"postComment":""},
       success: function(data) {
-            alert('Handling response');
-            var response = jQuery.parseJSON(result);
+            var response = jQuery.parseJSON(data);
             sessionId = response.sessionId;
             console.log(sessionId);
       },

@@ -11,8 +11,8 @@ public class JsonResponse implements SessionResponseBuilder {
         final String newLine = "\n";
         return "{ " + newLine +
                     "\"sessionId\":\"" + session.sessionId + "\"" + newLine +
-                    "\"device_height\": " + session.height + newLine +
-                    "\"device_width\": " + session.width + newLine +
+                    ",\"device_height\": " + session.height + newLine +
+                    ",\"device_width\": " + session.width + newLine +
                 "}";
     }
 }
