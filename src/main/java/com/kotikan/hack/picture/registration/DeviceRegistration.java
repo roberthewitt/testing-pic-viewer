@@ -21,7 +21,7 @@ public interface DeviceRegistration {
     Session registerForSession(HttpServletRequest req);
 
     Session fromId(HttpServletRequest req);
+
     String urlForSession(Session session);
 
-    Set<Session> sessionsTiedTo(Session session);
 }
