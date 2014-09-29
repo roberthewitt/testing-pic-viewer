@@ -20,9 +20,9 @@ public class Devices {
         return new DeviceRegistration() {
             @Override
             public Session registerForSession(HttpServletRequest req) {
-                int deviceHeight = getDeviceInt(req, "h");
-                int deviceWidth = getDeviceInt(req, "w");
-                String url = getDeviceString(req, "url");
+                int deviceHeight = paramInt(req, "h");
+                int deviceWidth = paramInt(req, "w");
+                String url = generateRandomCatUrl();
                 final Session session = Session.newSession(deviceHeight, deviceWidth);
 
                 sessionUrlMap.put(session, url);
@@ -38,11 +38,33 @@ public class Devices {
             }
 
             @Override
+            public Session fromId(HttpServletRequest req) {
+                Session session = null;
+                String sessionId = paramString(req, "sessionId");
+                for (Session s : sessionUrlMap.keySet()) {
+                    if (s.sessionId.equals(sessionId)) {
+                        session = s;
+                        break;
+                    }
+                }
+                return session;
+            }
+
+            @Override
+            public Set<Session> sessionsTiedTo(Session session) {
+                String url = sessionUrlMap.get(session);
+                if (url != null) {
+                    return urlSessionMap.get(url);
+                }
+                return new HashSet<>();
+            }
+
+            @Override
             public String urlForSession(Session session) {
                 return sessionUrlMap.get(session);
             }
 
-            private int getDeviceInt(HttpServletRequest req, String dimension) {
+            private int paramInt(HttpServletRequest req, String dimension) {
                 int param = 0;
                 String value = req.getParameter(dimension);
                 if (value != null) {
@@ -51,8 +73,8 @@ public class Devices {
                 return param;
             }
 
-            private String getDeviceString(HttpServletRequest req, String dimension) {
-                String param = "http://images4.fanpop.com/image/photos/14700000/Beautifull-cat-cats-14749885-1600-1200.jpg";
+            private String paramString(HttpServletRequest req, String dimension) {
+                String param = null;
                 String value = req.getParameter(dimension);
                 if (value != null) {
                     param = value;
@@ -60,5 +82,9 @@ public class Devices {
                 return param;
             }
         };
+    }
+
+    private static String generateRandomCatUrl() {
+        return "http://images4.fanpop.com/image/photos/14700000/Beautifull-cat-cats-14749885-1600-1200.jpg";
     }
 }
