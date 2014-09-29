@@ -1,4 +1,4 @@
-package com.kotikan.hack.picture;
+package com.kotikan.hack.picture.servlets;
 
 import com.kotikan.hack.picture.heartbeat.Beats;
 import com.kotikan.hack.picture.heartbeat.HeartBeats;

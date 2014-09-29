@@ -14,7 +14,7 @@
 
     <servlet>
         <servlet-name>ImageServlet</servlet-name>
-        <servlet-class>com.kotikan.hack.picture.ImageServlet</servlet-class>
+        <servlet-class>com.kotikan.hack.picture.servlets.ImageServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ImageServlet</servlet-name>
