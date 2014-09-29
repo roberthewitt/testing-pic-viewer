@@ -192,4 +192,42 @@ google.devrel.samples.hello.init = function(apiRoot) {
   apisToLoad = 2; // must match number of calls to gapi.client.load()
   gapi.client.load('helloworld', 'v1', callback, apiRoot);
   gapi.client.load('oauth2', 'v2', callback);
+
+  registerDevice();
+  sendHeartbeat();
+  setInterval(sendHeartbeat, 5000);
 };
+
+function sendHeartbeat() {
+  console.log("Heartbeat");
+}
+
+function registerDevice() {
+    var ratio = window.devicePixelRatio || 1;
+    var width = screen.width * ratio;
+    var height = screen.height * ratio;
+    console.log("Registering device: w = " + width + " h = " + height);
+    request('/reg?h=800&w=640');
+}
+
+function request(path, params, method) {
+    method = "post"; // Set method to post by default if not specified.
+
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
