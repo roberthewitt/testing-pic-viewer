@@ -18,4 +18,6 @@ public interface DeviceRegistration {
      * @return a new Session object for this device
      */
     Session registerForSession(HttpServletRequest req);
+
+    String urlForSession(Session session);
 }
