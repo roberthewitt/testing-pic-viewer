@@ -180,21 +180,6 @@ google.devrel.samples.hello.enableButtons = function() {
  * @param {string} apiRoot Root of the API's path.
  */
 google.devrel.samples.hello.init = function(apiRoot) {
-  // Loads the OAuth and helloworld APIs asynchronously, and triggers login
-  // when they have completed.
-  var apisToLoad;
-  var callback = function() {
-    if (--apisToLoad == 0) {
-      google.devrel.samples.hello.enableButtons();
-      google.devrel.samples.hello.signin(true,
-          google.devrel.samples.hello.userAuthed);
-    }
-  }
-
-  apisToLoad = 2; // must match number of calls to gapi.client.load()
-  gapi.client.load('helloworld', 'v1', callback, apiRoot);
-  gapi.client.load('oauth2', 'v2', callback);
-
    registerDevice();
    sendHeartbeat();
    setInterval(sendHeartbeat, 5000);
@@ -202,7 +187,23 @@ google.devrel.samples.hello.init = function(apiRoot) {
 };
 
 function sendHeartbeat() {
-  console.log("Heartbeat: " + sessionId);
+
+    var path = '/pulse?sessionId=' + sessionId;
+
+    if (sessionId != '') {
+        $.ajax({
+          type:    "GET",
+          url:     path,
+          success: function(data) {
+                var response = jQuery.parseJSON(data);
+                var isChanged = response.isChanged;
+                if (isChanged) {
+                    var urlToLoad = response.url
+                    document.getElementById("myImage").src=urlToLoad;
+                }
+          }
+        });
+    }
 }
 
 function registerDevice() {
@@ -215,17 +216,10 @@ function registerDevice() {
     $.ajax({
       type:    "POST",
       url:     path,
-      data:    {"postComment":""},
       success: function(data) {
             var response = jQuery.parseJSON(data);
             sessionId = response.sessionId;
             console.log(sessionId);
-      },
-      // vvv---- This is the new bit
-      error:   function(jqXHR, textStatus, errorThrown) {
-            alert("Error, status = " + textStatus + ", " +
-                  "error thrown: " + errorThrown
-            );
       }
     });
 }

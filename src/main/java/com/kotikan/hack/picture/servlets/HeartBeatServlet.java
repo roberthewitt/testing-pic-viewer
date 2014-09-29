@@ -35,7 +35,7 @@ public class HeartBeatServlet extends HttpServlet {
 
         if (isChanged) {
             String url = Images.instance().generateUrlFor(session);
-            jsonBody += "\"url\":\"" + url + "\"" + newLine;
+            jsonBody += ", \"url\":\"" + url + "\"" + newLine;
         }
 
         jsonBody += "}";
