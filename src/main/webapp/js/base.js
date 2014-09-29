@@ -207,7 +207,8 @@ function registerDevice() {
     var width = screen.width * ratio;
     var height = screen.height * ratio;
     console.log("Registering device: w = " + width + " h = " + height);
-    request('/reg?h=800&w=640');
+    var path = '/reg?h=' + height + '&w=' + width;
+    request(path);
 }
 
 function request(path, params, method) {
