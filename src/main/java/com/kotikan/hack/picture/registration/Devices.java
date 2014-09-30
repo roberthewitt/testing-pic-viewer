@@ -1,5 +1,6 @@
 package com.kotikan.hack.picture.registration;
 
+import com.kotikan.hack.picture.Constants;
 import com.kotikan.hack.picture.model.Session;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public class Devices {
                 int deviceHeight = paramInt(req, "h");
                 int deviceWidth = paramInt(req, "w");
                 //        return "http://banded-arcana-718.appspot.com/static_resource/tree.jpg";
-                String url = "http://localhost:8080/static_resource/tree.jpg";
+                String url = Constants.HOST + "/static_resource/tree.jpg";
                 final Session session = Session.newSession(deviceHeight, deviceWidth);
 
                 sessionUrlMap.put(session, url);
