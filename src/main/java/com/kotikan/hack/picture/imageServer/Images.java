@@ -1,10 +1,19 @@
 package com.kotikan.hack.picture.imageServer;
 
+import com.google.appengine.api.datastore.Blob;
+import com.google.appengine.repackaged.com.google.api.client.util.IOUtils;
+import com.google.apphosting.datastore.DatastoreV4;
+import com.google.apphosting.datastore.EntityV4;
 import com.kotikan.hack.picture.model.Session;
+import com.kotikan.hack.picture.registration.DeviceRegistration;
 import com.kotikan.hack.picture.registration.Devices;
 
+import javax.jdo.PersistenceManager;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
 
 /**
  * Created by roberthewitt on 29/09/2014.
@@ -17,7 +26,16 @@ public class Images {
         return new ImageGenerator() {
             @Override
             public String generateUrlFor(Session session) {
-                return Devices.instance().urlForSession(session);
+                DeviceRegistration deviceRegistration = Devices.instance();
+                final String urlForSession = deviceRegistration.urlForSession(session);
+
+                Set<Session> sessionSet = deviceRegistration.sessionsForUrl(urlForSession);
+
+                ImageBank bank = Images.bank();
+
+                ImageCropResult result = bank.cropImageFor(urlForSession, sessionSet);
+
+                return result.getUrlFor(session);
             }
 
             @Override
@@ -28,6 +46,15 @@ public class Images {
                     return true;
                 }
                 return false;
+            }
+        };
+    }
+
+    private static ImageBank bank() {
+        return new ImageBank() {
+            @Override
+            public ImageCropResult cropImageFor(String urlForSession, Set<Session> sessions) {
+                return new ImageCropResult();
             }
         };
     }

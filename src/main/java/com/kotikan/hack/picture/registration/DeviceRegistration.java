@@ -24,4 +24,5 @@ public interface DeviceRegistration {
 
     String urlForSession(Session session);
 
+    Set<Session> sessionsForUrl(String url);
 }
