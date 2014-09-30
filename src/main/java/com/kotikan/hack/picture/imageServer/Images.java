@@ -46,12 +46,20 @@ public class Images {
 
             @Override
             public boolean isNewImageRequired(Session session) {
+                boolean result = false;
                 LastKnownData lastKnownData = cache.get(session);
+                DeviceRegistration deviceRegistration = Devices.instance();
+                String forSession = deviceRegistration.urlForSession(session);
+                Set<Session> sessions = deviceRegistration.sessionsForUrl(forSession);
+                LastKnownData knownData = new LastKnownData(sessions.size());
+
                 if (lastKnownData == null) {
-                    cache.put(session, new LastKnownData());
-                    return true;
+                    result = true;
+                } else if (lastKnownData.size != knownData.size) {
+                    result = true;
                 }
-                return false;
+                cache.put(session, knownData);
+                return result;
             }
         };
     }
@@ -63,5 +71,11 @@ public class Images {
     }
 
     private static class LastKnownData {
+        int size;
+
+        public LastKnownData(int size) {
+
+            this.size = size;
+        }
     }
 }
