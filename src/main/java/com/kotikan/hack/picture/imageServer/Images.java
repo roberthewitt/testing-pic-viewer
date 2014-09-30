@@ -50,11 +50,16 @@ public class Images {
         };
     }
 
-    private static ImageBank bank() {
+    public static ImageBank bank() {
         return new ImageBank() {
             @Override
             public ImageCropResult cropImageFor(String urlForSession, Set<Session> sessions) {
                 return new ImageCropResult();
+            }
+
+            @Override
+            public String registerImageRequest(String url) {
+                return "http://localhost/hostedImage/tree";
             }
         };
     }

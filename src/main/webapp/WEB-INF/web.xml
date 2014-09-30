@@ -30,6 +30,24 @@
         <url-pattern>/pulse</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ImageUrlGeneratorServlet</servlet-name>
+        <servlet-class>com.kotikan.hack.picture.servlets.ImageUrlGeneratorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImageUrlGeneratorServlet</servlet-name>
+        <url-pattern>/genUrl</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ImageViewerServlet</servlet-name>
+        <servlet-class>com.kotikan.hack.picture.servlets.ImageViewerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImageViewerServlet</servlet-name>
+        <url-pattern>/hostedImage/*</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

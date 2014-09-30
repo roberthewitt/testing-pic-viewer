@@ -9,4 +9,7 @@ import java.util.Set;
  */
 public interface ImageBank {
     ImageCropResult cropImageFor(String urlForSession, Set<Session> sessions);
+
+    String registerImageRequest(String url);
+
 }
