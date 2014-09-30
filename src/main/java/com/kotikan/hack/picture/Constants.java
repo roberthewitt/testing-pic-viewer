@@ -11,5 +11,6 @@ public class Constants {
 
     public static final String EMAIL_SCOPE = "https://www.googleapis.com/auth/userinfo.email";
 
-    public static final String HOST = "http://localhost:8080";
+    public static final String HOST = "http://banded-arcana-718.appspot.com";
+//    public static final String HOST = "http://localhost:8080";
 }

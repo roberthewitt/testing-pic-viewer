@@ -185,7 +185,7 @@ google.devrel.samples.hello.init = function(apiRoot) {
    var url = getUrlParameter('url');
    registerDevice(url)
    sendHeartbeat();
-   setInterval(sendHeartbeat, 5000);
+   setInterval(sendHeartbeat, 1500);
 };
 
 function sendHeartbeat() {

@@ -81,16 +81,23 @@ class MemoryCachedImageBank implements ImageBank {
                     Session first = sessionIterator.next();
                     Session second = sessionIterator.next();
 
-                    int minimumHeight = Math.min(first.height, second.height);
-                    Transform resize = ImagesServiceFactory.makeResize(first.width + second.width, minimumHeight);
-                    Image scaledImage = imagesService.applyTransform(resize, originalImage);
+                    System.out.println("first height= " + first.height);
+                    System.out.println("second height= " + second.height);
+                    int maximumHeight = Math.max(first.height, second.height);
+                    int totalWidth = first.width + second.width;
+                    Transform resize = ImagesServiceFactory.makeResize(totalWidth, maximumHeight, true);
+                    Image scaledImage1 = imagesService.applyTransform(resize, originalImage);
+                    Image scaledImage2 = imagesService.applyTransform(resize, ImagesServiceFactory.makeImage(originalUrlData));
+                    System.out.println(String.format("scaledImage.height = %d ; scaledImage.width = %d", scaledImage1.getHeight(), scaledImage1.getWidth()));
 
-                    Transform transform1 = ImagesServiceFactory.makeCrop(0, 0, first.width, minimumHeight);
-                    Image image1 = imagesService.applyTransform(transform1, scaledImage, ImagesService.OutputEncoding.PNG);
+                    float firstWidth = ((float) first.width) / ((float) totalWidth);
+                    System.out.println("firstWidth = " + firstWidth);
+                    Transform transform1 = ImagesServiceFactory.makeCrop(0.0f, 0.0f, 0.5f, 1.0f);
+                    Image image1 = imagesService.applyTransform(transform1, scaledImage1, ImagesService.OutputEncoding.PNG);
                     dataMap.put(first, new Data(croppedGenerator.newUrl(), image1));
 
-                    Transform transform2 = ImagesServiceFactory.makeCrop(0, 0, second.width, minimumHeight);
-                    Image image2 = imagesService.applyTransform(transform2, scaledImage, ImagesService.OutputEncoding.PNG);
+                    Transform transform2 = ImagesServiceFactory.makeCrop(0.5f, 0.0f, 1.0f, 1.0f);
+                    Image image2 = imagesService.applyTransform(transform2, scaledImage2, ImagesService.OutputEncoding.PNG);
                     dataMap.put(second, new Data(croppedGenerator.newUrl(), image2));
                 }
 
