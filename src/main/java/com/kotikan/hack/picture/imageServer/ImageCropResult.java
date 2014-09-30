@@ -1,5 +1,6 @@
 package com.kotikan.hack.picture.imageServer;
 
+import com.google.appengine.api.images.Image;
 import com.kotikan.hack.picture.model.Session;
 
 import java.util.Map;
@@ -26,11 +27,13 @@ public class ImageCropResult {
         return result;
     }
 
-    public Data getDataForFor(Session session) {
-        Data data = dataMap.remove(session);
-        if (data == null) {
-            data = NO_DATA;
+    public Image getDataForHostedKey(String hostedKey) {
+        for (Session key : dataMap.keySet()) {
+            Data data = dataMap.get(key);
+            if (data.url.contains(hostedKey)) {
+                return data.image;
+            }
         }
-        return data;
+        return null;
     }
 }

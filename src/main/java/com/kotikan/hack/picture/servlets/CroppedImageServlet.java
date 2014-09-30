@@ -1,6 +1,8 @@
 package com.kotikan.hack.picture.servlets;
 
 import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesServicePb;
+import com.google.appengine.repackaged.com.google.common.util.Base64;
 import com.kotikan.hack.picture.imageServer.Images;
 import com.kotikan.hack.picture.model.Session;
 import com.kotikan.hack.picture.registration.Devices;
@@ -21,14 +23,14 @@ public class CroppedImageServlet extends HttpServlet {
         String requestURI = req.getRequestURI();
         System.out.println("requestURI = " + requestURI);
 
-        final Session session = Devices.instance().fromId(req);
-        if (session == null) {
-            resp.setStatus(404);
-            return;
-        }
+        final String hostedKey = requestURI.replace("/cropped/", "");
+        System.out.println("hostedKey = " + hostedKey);
 
-        Image image = Images.bank().getImageFor(session);
+        Image image = Images.bank().getImageForHostedKey(hostedKey);
+        System.out.println("image = " + image);
         if (image != null) {
+            System.out.println("image.getFormat() = " + image.getFormat());
+            resp.setContentType("image/png");
             resp.getOutputStream().write(image.getImageData());
         }
     }

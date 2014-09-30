@@ -13,5 +13,5 @@ public interface ImageBank {
 
     String registerImageRequest(String url);
 
-    Image getImageFor(Session session);
+    Image getImageForHostedKey(String hostedKey);
 }

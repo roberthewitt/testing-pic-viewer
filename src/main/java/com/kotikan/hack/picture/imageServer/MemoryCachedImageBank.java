@@ -25,12 +25,13 @@ class MemoryCachedImageBank implements ImageBank {
     final UrlGenerator hostedGenerator = new UniqueImageUrlGenerator("hostedImage");
 
     @Override
-    public Image getImageFor(Session session) {
-        for (String url : remoteUrlsToImageData.keySet()) {
-            ImageCropResult imageCropResult = remoteUrlsToImageData.get(url);
-            Data data = imageCropResult.getDataForFor(session);
-            if (data != ImageCropResult.NO_DATA) {
-                return data.image;
+    public Image getImageForHostedKey(String hostedKey) {
+        System.out.println("MemoryCachedImageBank.getImageForHostedKey");
+        for (String key : remoteUrlsToImageData.keySet()) {
+            ImageCropResult imageCropResult = remoteUrlsToImageData.get(key);
+            Image dataForHostedKey = imageCropResult.getDataForHostedKey(hostedKey);
+            if (dataForHostedKey != null) {
+                return dataForHostedKey;
             }
         }
         return null;
@@ -70,7 +71,7 @@ class MemoryCachedImageBank implements ImageBank {
                     Session onlySession = sessionIterator.next();
 
                     Transform resize = ImagesServiceFactory.makeResize(onlySession.width, onlySession.height);
-                    Image newImage = imagesService.applyTransform(resize, originalImage);
+                    Image newImage = imagesService.applyTransform(resize, originalImage, ImagesService.OutputEncoding.PNG);
 
                     String url = croppedGenerator.newUrl();
                     dataMap.put(onlySession, new Data(url, newImage));
@@ -85,11 +86,11 @@ class MemoryCachedImageBank implements ImageBank {
                     Image scaledImage = imagesService.applyTransform(resize, originalImage);
 
                     Transform transform1 = ImagesServiceFactory.makeCrop(0, 0, first.width, minimumHeight);
-                    Image image1 = imagesService.applyTransform(transform1, scaledImage);
+                    Image image1 = imagesService.applyTransform(transform1, scaledImage, ImagesService.OutputEncoding.PNG);
                     dataMap.put(first, new Data(croppedGenerator.newUrl(), image1));
 
                     Transform transform2 = ImagesServiceFactory.makeCrop(0, 0, second.width, minimumHeight);
-                    Image image2 = imagesService.applyTransform(transform2, scaledImage);
+                    Image image2 = imagesService.applyTransform(transform2, scaledImage, ImagesService.OutputEncoding.PNG);
                     dataMap.put(second, new Data(croppedGenerator.newUrl(), image2));
                 }
 
