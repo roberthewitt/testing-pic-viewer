@@ -1,15 +1,9 @@
 package com.kotikan.hack.picture.imageServer;
 
-import com.google.appengine.api.datastore.Blob;
-import com.google.appengine.repackaged.com.google.api.client.util.IOUtils;
-import com.google.apphosting.datastore.DatastoreV4;
-import com.google.apphosting.datastore.EntityV4;
 import com.kotikan.hack.picture.model.Session;
 import com.kotikan.hack.picture.registration.DeviceRegistration;
 import com.kotikan.hack.picture.registration.Devices;
 
-import javax.jdo.PersistenceManager;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -27,13 +21,25 @@ public class Images {
             @Override
             public String generateUrlFor(Session session) {
                 DeviceRegistration deviceRegistration = Devices.instance();
-                final String urlForSession = deviceRegistration.urlForSession(session);
+                String remoteImageValue = null;
+                final String hostedImageKey = deviceRegistration.urlForSession(session);
 
-                Set<Session> sessionSet = deviceRegistration.sessionsForUrl(urlForSession);
+                for (String hosted : imageBank.hostedEndPointsToActualRemoteImages.keySet()) {
 
-                ImageBank bank = Images.bank();
+                    System.out.println(String.format("hostedShort = %s ; hostedFull = %s", hostedImageKey, hosted));
+                    if (hosted.contains(hostedImageKey)) {
+                        remoteImageValue = imageBank.hostedEndPointsToActualRemoteImages.get(hosted);
+                        System.out.println("remoteImageValue = " + remoteImageValue);
+                        break;
+                    }
+                }
+                ImageCropResult result = new ImageCropResult(new HashMap<Session, Data>());
 
-                ImageCropResult result = bank.cropImageFor(urlForSession, sessionSet);
+                if (remoteImageValue != null) {
+                    Set<Session> sessionSet = deviceRegistration.sessionsForUrl(hostedImageKey);
+                    System.out.println("sessionSet = " + sessionSet.size());
+                    result = Images.bank().cropImageFor(remoteImageValue, sessionSet);
+                }
 
                 return result.getUrlFor(session);
             }
@@ -50,18 +56,9 @@ public class Images {
         };
     }
 
+    private static final MemoryCachedImageBank imageBank = new MemoryCachedImageBank();
     public static ImageBank bank() {
-        return new ImageBank() {
-            @Override
-            public ImageCropResult cropImageFor(String urlForSession, Set<Session> sessions) {
-                return new ImageCropResult();
-            }
-
-            @Override
-            public String registerImageRequest(String url) {
-                return "http://localhost/hostedImage/tree";
-            }
-        };
+        return imageBank;
     }
 
     private static class LastKnownData {

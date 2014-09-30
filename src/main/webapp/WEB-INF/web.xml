@@ -40,11 +40,20 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ImageViewerServlet</servlet-name>
-        <servlet-class>com.kotikan.hack.picture.servlets.ImageViewerServlet</servlet-class>
+        <servlet-name>CroppedImageServlet</servlet-name>
+        <servlet-class>com.kotikan.hack.picture.servlets.CroppedImageServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ImageViewerServlet</servlet-name>
+        <servlet-name>CroppedImageServlet</servlet-name>
+        <url-pattern>/cropped/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>HostedImageServlet</servlet-name>
+        <servlet-class>com.kotikan.hack.picture.servlets.HostedImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HostedImageServlet</servlet-name>
         <url-pattern>/hostedImage/*</url-pattern>
     </servlet-mapping>
 

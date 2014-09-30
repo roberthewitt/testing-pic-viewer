@@ -21,7 +21,7 @@ public class ImageUrlGeneratorServlet extends HttpServlet {
 
         String newLine = "\n";
         String jsonBody = "{ " + newLine;
-        jsonBody +=  "\"url\": " + resultingUrl + newLine;
+        jsonBody +=  "\"url\": \"" + resultingUrl + "\"" + newLine;
         jsonBody += "}";
         resp.getWriter().write(jsonBody);
     }

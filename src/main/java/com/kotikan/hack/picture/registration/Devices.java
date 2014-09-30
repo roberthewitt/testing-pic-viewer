@@ -3,7 +3,10 @@ package com.kotikan.hack.picture.registration;
 import com.kotikan.hack.picture.model.Session;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by roberthewitt on 29/09/2014.
@@ -19,8 +22,8 @@ public class Devices {
             public Session registerForSession(HttpServletRequest req) {
                 int deviceHeight = paramInt(req, "h");
                 int deviceWidth = paramInt(req, "w");
-                //        return "http://banded-arcana-718.appspot.com/static_resource/tree.jpg";
-                String url = "http://localhost:8080/static_resource/tree.jpg";
+                String url = paramString(req, "url");
+
                 final Session session = Session.newSession(deviceHeight, deviceWidth);
 
                 sessionUrlMap.put(session, url);

@@ -1,5 +1,6 @@
 package com.kotikan.hack.picture.imageServer;
 
+import com.google.appengine.api.images.Image;
 import com.kotikan.hack.picture.model.Session;
 
 import java.util.Set;
@@ -12,4 +13,5 @@ public interface ImageBank {
 
     String registerImageRequest(String url);
 
+    Image getImageFor(Session session);
 }
