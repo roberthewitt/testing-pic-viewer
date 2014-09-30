@@ -2,8 +2,9 @@
 var sessionId = '';
 
 function getUrl() {
+  console.log("Button pressed");
   generateUrl(document.getElementById('id').value);
-};
+}
 
 function generateUrl(url) {
     console.log("Generate url: url = " + url);

@@ -181,7 +181,8 @@ google.devrel.samples.hello.enableButtons = function() {
  * @param {string} apiRoot Root of the API's path.
  */
 google.devrel.samples.hello.init = function(apiRoot) {
-   registerDevice()
+   var url = getUrlParameter('url');
+   registerDevice(url)
    sendHeartbeat();
    setInterval(sendHeartbeat, 5000);
 };
@@ -210,8 +211,8 @@ function registerDevice(url) {
     var ratio = window.devicePixelRatio || 1;
     var width = screen.width * ratio;
     var height = screen.height * ratio;
-    console.log("Registering device: w = " + width + " h = " + height);
-    var path = '/reg?h=' + height + '&w=' + width + '&dpr=' + ratio;
+    console.log("Registering device: url = " + url + " w = " + width + " h = " + height);
+    var path = '/reg?url=' + url + '&h=' + height + '&w=' + width + '&dpr=' + ratio;
 
     $.ajax({
       type:    "POST",
@@ -222,6 +223,20 @@ function registerDevice(url) {
             console.log(sessionId);
       }
     });
+}
+
+function getUrlParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++)
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam)
+        {
+            return sParameterName[1];
+        }
+    }
 }
 
 
