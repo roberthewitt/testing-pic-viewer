@@ -1,6 +1,5 @@
 package com.kotikan.hack.picture.imageServer;
 
-import com.kotikan.hack.picture.Constants;
 import com.kotikan.hack.picture.model.Session;
 
 import java.util.Map;

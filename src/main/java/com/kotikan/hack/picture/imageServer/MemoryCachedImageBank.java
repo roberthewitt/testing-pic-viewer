@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
-* Created by roberthewitt on 30/09/2014.
-*/
+ * Created by roberthewitt on 30/09/2014.
+ */
 class MemoryCachedImageBank implements ImageBank {
 
     private final ImageCropResult NO_DATA = new ImageCropResult(new HashMap<Session, Data>());
@@ -75,7 +75,7 @@ class MemoryCachedImageBank implements ImageBank {
                     String url = croppedGenerator.newUrl();
                     dataMap.put(onlySession, new Data(url, newImage));
 
-                } else if ( sessions.size() == 2) {
+                } else if (sessions.size() == 2) {
                     System.out.println("generating a double image");
                     Session first = sessionIterator.next();
                     Session second = sessionIterator.next();

@@ -1,7 +1,6 @@
 package com.kotikan.hack.picture.servlets;
 
 import com.kotikan.hack.picture.model.Session;
-import com.kotikan.hack.picture.registration.DeviceRegistration;
 import com.kotikan.hack.picture.registration.Devices;
 import com.kotikan.hack.picture.registration.JsonResponse;
 import com.kotikan.hack.picture.registration.SessionResponseBuilder;

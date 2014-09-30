@@ -1,6 +1,5 @@
 package com.kotikan.hack.picture.servlets;
 
-import com.kotikan.hack.picture.heartbeat.BeatInfo;
 import com.kotikan.hack.picture.imageServer.Images;
 
 import javax.servlet.ServletException;
@@ -21,7 +20,7 @@ public class ImageUrlGeneratorServlet extends HttpServlet {
 
         String newLine = "\n";
         String jsonBody = "{ " + newLine;
-        jsonBody +=  "\"url\": \"" + resultingUrl + "\"" + newLine;
+        jsonBody += "\"url\": \"" + resultingUrl + "\"" + newLine;
         jsonBody += "}";
         resp.getWriter().write(jsonBody);
     }

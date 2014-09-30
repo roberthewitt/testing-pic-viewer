@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by roberthewitt on 30/09/2014.
  */
-public class HostedImageServlet extends HttpServlet{
+public class HostedImageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     }
