@@ -9,10 +9,12 @@ public class JsonResponse implements SessionResponseBuilder {
     @Override
     public String forSession(Session session) {
         final String newLine = "\n";
+        String url = (String) url;
         return "{ " + newLine +
                     "\"sessionId\":\"" + session.sessionId + "\"" + newLine +
                     ",\"device_height\": " + session.height + newLine +
                     ",\"device_width\": " + session.width + newLine +
+                    ",\"url\": " + url + newLine +
                 "}";
     }
 }

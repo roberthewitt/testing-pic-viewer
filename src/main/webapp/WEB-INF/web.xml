@@ -30,6 +30,15 @@
         <url-pattern>/pulse</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>CroppedImageServlet</servlet-name>
+        <servlet-class>com.kotikan.hack.picture.servlets.CroppedImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CroppedImageServlet</servlet-name>
+        <url-pattern>/cropped/*</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

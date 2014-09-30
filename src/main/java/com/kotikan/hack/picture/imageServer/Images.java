@@ -45,7 +45,7 @@ public class Images {
     }
 
     private static final MemoryCachedImageBank imageBank = new MemoryCachedImageBank();
-    private static ImageBank bank() {
+    public static ImageBank bank() {
         return imageBank;
     }
 
