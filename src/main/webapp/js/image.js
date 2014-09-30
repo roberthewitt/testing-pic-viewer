@@ -181,6 +181,7 @@ google.devrel.samples.hello.enableButtons = function() {
  * @param {string} apiRoot Root of the API's path.
  */
 google.devrel.samples.hello.init = function(apiRoot) {
+   console.log("Image init");
    var url = getUrlParameter('url');
    registerDevice(url)
    sendHeartbeat();
@@ -227,16 +228,10 @@ function registerDevice(url) {
 
 function getUrlParameter(sParam)
 {
-    var sPageURL = window.location.search.substring(1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++)
-    {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam)
-        {
-            return sParameterName[1];
-        }
-    }
+    var url = window.location.pathname;
+    var imageUrl = url.replace("hostedImage/", "");
+    console.log("URL string" + imageUrl);
+    return imageUrl;
 }
 
 
