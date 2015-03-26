@@ -201,7 +201,7 @@ function sendHeartbeat() {
                 var isChanged = response.isChanged;
                 if (isChanged) {
                     var urlToLoad = response.url
-                    document.getElementById("myImage").src=urlToLoad;
+                    document.getElementById("card").src=urlToLoad;
                 }
           }
         });
